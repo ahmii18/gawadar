@@ -2,20 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveToTarget : MonoBehaviour {
+public class MoveToTarget : MonoBehaviour
+{
 
     public GameObject target;
-    Vector3 position;       //[x,yz]
+    Vector3 position;
+    Vector3 rotation;
+    public float cspeed = 10f;
+    public float Rspeed = 100f;
+    //[x,yz]
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         position = target.transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//When script is attached to an object, it must do the following things
-        //Make sure that the object is pointing towards the target
-        //Move the object towards the target at a constant speed.
-        //When object touches the target, stop the object from moving.
-	}
+        rotation = target.transform.rotation;
+        transform.Rotate(rotation, Rspeed * Time.deltaTime);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        while (transform.Position != position)
+        {
+            transform.Translate(Vector3.forward * cspeed * Time.deltaTime);
+        }
+    }
 }
+
+
+
